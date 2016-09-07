@@ -60,6 +60,17 @@ const static byte charTable [] PROGMEM  = {
     B00110111,B00000000,B00000000,B00000000,B00001110,B00000000,B00010101,B00011101,
     B01100111,B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,
     B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00000000
+
+};
+
+const static byte digitTable [] PROGMEM = {
+    B01111110, B00110000, B01101101, B01111001, B00110011,
+    B01011011, B01011111, B01110000, B01111111, B01111011
+};
+
+const static byte digitTableRotated [] PROGMEM = {
+    B01111110, B00000110, B01101101, B01001111, B00010111,
+    B01011011, B01111011, B00001110, B01111111, B01011111
 };
 
 class LedControl {
@@ -170,8 +181,10 @@ class LedControl {
          * digit	the position of the digit on the display (0..7)
          * value	the value to be displayed. (0x00..0x0F)
          * dp	sets the decimal point.
+         * rotated rotates digit by 180deg, in case you installed a digit
+         * 		upside down like I did... (default false)
          */
-        void setDigit(int addr, int digit, byte value, boolean dp);
+        void setDigit(int addr, int digit, byte value, boolean dp, boolean rotated=false);
 
         /* 
          * Display a character on a 7-Segment display.

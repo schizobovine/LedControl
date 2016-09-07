@@ -152,7 +152,7 @@ void LedControl::setColumn(int addr, int col, byte value) {
     }
 }
 
-void LedControl::setDigit(int addr, int digit, byte value, boolean dp) {
+void LedControl::setDigit(int addr, int digit, byte value, boolean dp, boolean rotated) {
     int offset;
     byte v;
 
@@ -161,7 +161,11 @@ void LedControl::setDigit(int addr, int digit, byte value, boolean dp) {
     if(digit<0 || digit>7 || value>15)
         return;
     offset=addr*8;
-    v=pgm_read_byte_near(charTable + value); 
+    if(rotated) {
+      v=pgm_read_byte_near(digitTableRotated + value);
+    } else {
+      v=pgm_read_byte_near(digitTable + value);
+    }
     if(dp)
         v|=B10000000;
     status[offset+digit]=v;
